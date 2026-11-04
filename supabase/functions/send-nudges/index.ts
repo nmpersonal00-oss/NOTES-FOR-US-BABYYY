@@ -37,7 +37,7 @@ Deno.serve(async(req:Request)=>{
   webpush.setVapidDetails(subject,vapidPublic,vapidPrivate);
   const db=createClient(url,serviceKey,{auth:{persistSession:false,autoRefreshToken:false}});
   const [notesResult,membersResult,subsResult]=await Promise.all([
-    db.from('notes').select('id,room_id,title,body,repeat,remind_time,audience').neq('repeat','off'),
+    db.from('notes').select('id,room_id,title,body,repeat,remind_time').neq('repeat','off'),
     db.from('room_members').select('room_id,user_id,role'),
     db.from('push_subscriptions').select('id,user_id,subscription,timezone')
   ]);
@@ -59,7 +59,6 @@ Deno.serve(async(req:Request)=>{
     if(!target || !/^([01]\d|2[0-3]):[0-5]\d$/.test(target))continue;
     const [targetHour,targetMinute]=target.split(':').map(Number);
     for(const sub of relevant.get(note.room_id)||[]){
-      if(note.audience!=='both'&&note.audience!==sub.role)continue;
       const local=localNow(sub.timezone||'UTC',at);
       // One-minute cron with 10-minute grace window for scheduling drift; one daily delivery per device.
       const elapsed=local.hour*60+local.minute-(targetHour*60+targetMinute);

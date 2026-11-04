@@ -31,20 +31,14 @@
 
     <main class="notes-main" id="home-screen">
       <div class="notes-heading">
-        <div class="heading-copy"><span class="eyebrow">OUR REMINDERS</span><h1 id="notes-title">Your notes <span class="heading-flower" aria-hidden="true"></span></h1></div>
-        <button class="new-note-button" id="hero-add" type="button"><span class="add-symbol" aria-hidden="true"></span> Add note</button>
-      </div>
-      <div class="filter-row" role="group" aria-label="Filter notes">
-        <button class="filter active" data-filter="all" type="button" aria-pressed="true">All</button>
-        <button class="filter" data-filter="both" type="button" aria-pressed="false">For both</button>
-        <button class="filter" data-filter="mine" type="button" aria-pressed="false" hidden>For me</button>
-        <button class="filter" data-filter="reminders" type="button" aria-pressed="false">Reminders</button>
+        <div class="heading-copy"><span class="eyebrow">OUR SHARED SPACE</span><h1 id="notes-title">Reminders <span class="heading-flower" aria-hidden="true"></span></h1></div>
+        <button class="new-note-button" id="hero-add" type="button"><span class="add-symbol" aria-hidden="true"></span> Add reminder</button>
       </div>
       <div id="notes-list" class="notes-list" aria-live="polite"></div>
     </main>
     <nav class="bottom-nav" aria-label="Main navigation">
-      <button class="nav-button nav-selected" id="nav-home" type="button" aria-current="page"><img src="./assets/sticker-bunny.png" alt=""><span>Notes</span></button>
-      <button class="nav-button nav-add" id="nav-add" type="button"><img src="./assets/sticker-letter.png" alt=""><span>Add note</span></button>
+      <button class="nav-button nav-selected" id="nav-home" type="button" aria-current="page"><img src="./assets/sticker-bunny.png" alt=""><span>Reminders</span></button>
+      <button class="nav-button nav-add" id="nav-add" type="button"><img src="./assets/sticker-letter.png" alt=""><span>Add reminder</span></button>
       <button class="nav-button" id="nav-shared" type="button"><img src="./assets/sticker-couple.png" alt=""><span>Together</span></button>
     </nav>
   </div>
@@ -53,7 +47,7 @@
     <form id="note-form" class="editor-panel">
       <div class="editor-head">
         <button class="back-button" type="button" data-close="note-dialog" aria-label="Back to notes"><span aria-hidden="true">‹</span></button>
-        <h2 id="note-modal-heading">Create a Sweet Note</h2>
+        <h2 id="note-modal-heading">Add reminder</h2>
         <div class="editor-head-deco" aria-hidden="true"></div>
       </div>
       <div class="editor-art-wrap"><img class="editor-art" src="./assets/art-envelope.png" alt="A magical pink letter, feather and glowing flowers"></div>
@@ -62,17 +56,9 @@
         <input id="note-title" name="title" maxlength="72" placeholder="What should we remember?" required autocomplete="off">
         <label for="note-body">Note <span class="sub-label">optional</span></label>
         <textarea id="note-body" name="body" rows="3" maxlength="500" placeholder="Write your reminder here..."></textarea>
-        <fieldset class="control-section"><legend>Who is it for?</legend>
-          <div class="audience-row" id="audience-choice" role="group" aria-label="Who should receive this note">
-            <button class="audience-choice" data-value="wife" type="button"><img src="./assets/sticker-bunny.png" alt=""><span>Wife</span></button>
-            <button class="audience-choice" data-value="hubby" type="button"><img src="./assets/sticker-bear.png" alt=""><span>Husband</span></button>
-            <button class="audience-choice selected" data-value="both" type="button" aria-pressed="true"><img src="./assets/sticker-couple.png" alt=""><span>Both</span></button>
-          </div>
-        </fieldset>
         <fieldset class="control-section"><legend>Remind me</legend>
           <div class="time-row" id="repeat-choice" role="group" aria-label="Choose a reminder time">
-            <button class="time-choice selected" data-value="off" type="button" aria-pressed="true">Off</button>
-            <button class="time-choice" data-value="morning" type="button">Morning</button>
+            <button class="time-choice selected" data-value="morning" type="button" aria-pressed="true">Morning</button>
             <button class="time-choice" data-value="afternoon" type="button">Afternoon</button>
             <button class="time-choice" data-value="evening" type="button">Evening</button>
             <button class="time-choice" data-value="custom" type="button">My time</button>
@@ -90,7 +76,7 @@
           </div>
         </fieldset>
       </div>
-      <div class="editor-footer"><button id="delete-note" class="delete-button" type="button" hidden>Delete note</button><button id="save-note" class="primary-button" type="submit">Save Sweet Note</button></div>
+      <div class="editor-footer"><button id="delete-note" class="delete-button" type="button" hidden>Delete note</button><button id="save-note" class="primary-button" type="submit">Save reminder</button></div>
     </form>
   </dialog>
 
@@ -98,11 +84,11 @@
     <div class="settings-panel">
       <div class="editor-head"><button class="back-button" data-close="settings-dialog" type="button" aria-label="Back to notes"><span aria-hidden="true">‹</span></button><h2 id="settings-heading">Together</h2><img class="settings-header-art" src="./assets/sticker-couple.png" alt=""></div>
       <div class="settings-content">
-        <div class="settings-intro"><img src="./assets/sticker-couple.png" alt="Two cartoon friends hugging"><div><h3>Our shared space</h3><p>Connect both phones and turn on reminders.</p></div></div>
+        <div class="settings-intro"><img src="./assets/sticker-couple.png" alt="Two cartoon friends hugging"><div><h3>Our reminders</h3><p>Connect both phones to receive the same reminders.</p></div></div>
         <div id="offline-panel" class="settings-card"><h3>Connect to share notes</h3><p>Notes currently save on this device. Couple sharing and real push need a separate Supabase project, HTTPS hosting, and phone permissions. The full setup is in the included README.</p><span class="mode-pill">Local mode</span></div>
         <div id="cloud-panel" hidden>
           <div id="signed-out-panel" class="settings-card"><h3>Sign in to connect your phones</h3><form id="auth-form"><label for="auth-email">Email</label><input id="auth-email" type="email" required autocomplete="email" placeholder="Your email"><label for="auth-password">Password</label><input id="auth-password" type="password" minlength="6" required autocomplete="current-password" placeholder="Password"><div class="auth-buttons"><button id="sign-up" class="secondary-button" type="button">Create account</button><button class="primary-button" type="submit">Sign in</button></div></form><p class="settings-note">You may need to confirm your email before signing in.</p></div>
-          <div id="signed-in-panel" hidden><div class="settings-card"><div class="signed-in-row"><strong id="signed-in-email"></strong><button id="sign-out" class="small-link" type="button">Sign out</button></div><div id="room-empty"><h3>Make a space for two</h3><p>One person creates a private space; the other joins with a code.</p><div class="auth-buttons"><button id="create-wife" class="secondary-button" type="button">I'm Wife</button><button id="create-hubby" class="secondary-button" type="button">I'm Husband</button></div><div class="or-divider">or join your partner</div><label for="join-code">Invite code</label><input id="join-code" autocomplete="off" spellcheck="false" placeholder="Paste invite code"><button id="join-room" class="primary-button full" type="button">Join space</button></div><div id="room-ready" hidden><h3>Our shared notes</h3><p>Share this private code with your husband or wife.</p><div class="invite-code"><code id="invite-code"></code><button id="copy-code" type="button">Copy</button></div><p class="settings-note" id="your-role"></p></div></div></div>
+          <div id="signed-in-panel" hidden><div class="settings-card"><div class="signed-in-row"><strong id="signed-in-email"></strong><button id="sign-out" class="small-link" type="button">Sign out</button></div><div id="room-empty"><h3>Make a space for two</h3><p>Create one private space, then share its invite code with your partner.</p><div class="auth-buttons"><button id="create-space" class="secondary-button" type="button">Create shared space</button></div><div class="or-divider">or join your partner</div><label for="join-code">Invite code</label><input id="join-code" autocomplete="off" spellcheck="false" placeholder="Paste invite code"><button id="join-room" class="primary-button full" type="button">Join space</button></div><div id="room-ready" hidden><h3>Your shared reminders</h3><p>Share this private code with your partner.</p><div class="invite-code"><code id="invite-code"></code><button id="copy-code" type="button">Copy</button></div><p class="settings-note" id="your-role"></p></div></div></div>
           <div id="push-panel" class="settings-card" hidden><h3>Push notifications</h3><p>Turn these on separately on each phone. Daily reminders arrive at your chosen local times.</p><button id="enable-push" class="primary-button full" type="button">Enable notifications</button><p id="push-status" class="settings-note">On iPhone, first install this app to your Home Screen from Safari.</p><button id="test-push" class="small-link" type="button">Test notification on this phone</button></div>
         </div>
         <div id="settings-message" class="settings-feedback" role="status" aria-live="polite"></div>
