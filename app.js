@@ -4,7 +4,7 @@ const $=(selector,root=document)=>root.querySelector(selector);
 const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
 const STORAGE_KEY='petal-notes-v2';
 const OLD_STORAGE_KEY='petal-notes-v1';
-const ART={book:'sticker-book.png',snack:'sticker-snack.png',vitamins:'sticker-vitamins.png',letter:'sticker-letter.png',bunny:'sticker-bunny.png',bear:'sticker-bear.png'};
+const ART={book:'sticker-book.webp',snack:'sticker-snack.webp',vitamins:'sticker-vitamins.webp',letter:'sticker-letter.webp',bunny:'sticker-bunny.webp',bear:'sticker-bear.webp'};
 const ui={notes:[],editingId:null,audience:'both',repeat:'morning',remind_time:null,sticker:'book',client:null,user:null,membership:null,inviteCode:'',working:false};
 const cloudConfig=window.PETAL_CLOUD||{};
 const cloudConfigured=!!(cloudConfig.url&&cloudConfig.publishableKey);
@@ -34,7 +34,7 @@ function render(){
  const host=$('#notes-list');host.replaceChildren();
  if(!ui.notes.length){
    const empty=document.createElement('div');empty.className='empty-state';
-   const art=document.createElement('img');art.src='./assets/sticker-couple.png';art.alt='Illustrated bunny and bear';
+   const art=document.createElement('img');art.src='./assets/sticker-couple.webp';art.alt='Illustrated bunny and bear';
    const title=document.createElement('h2');title.textContent='No reminders yet';
    const body=document.createElement('p');body.textContent='Add your first reminder to receive a daily notification on both phones once connected.';
    const add=document.createElement('button');add.type='button';add.className='new-note-button';add.textContent='Add reminder';

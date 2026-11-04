@@ -25,8 +25,8 @@
   </div>
   <div class="app-shell">
     <header class="app-header">
-      <img class="hero-illustration" src="./assets/hero-couple.png" alt="Petal Notes — a glowing cartoon bunny and bear in a garden of flowers">
-      <button class="settings-orb" id="open-settings" type="button" aria-label="Shared space and notification settings"><img src="./assets/sticker-bell.png" alt=""></button>
+      <img class="hero-illustration" src="./assets/sticker-couple.webp" alt="Petal Notes — a glowing cartoon bunny and bear in a garden of flowers">
+      <button class="settings-orb" id="open-settings" type="button" aria-label="Shared space and notification settings"><img src="./assets/sticker-bell.webp" alt=""></button>
     </header>
 
     <main class="notes-main" id="home-screen">
@@ -37,9 +37,9 @@
       <div id="notes-list" class="notes-list" aria-live="polite"></div>
     </main>
     <nav class="bottom-nav" aria-label="Main navigation">
-      <button class="nav-button nav-selected" id="nav-home" type="button" aria-current="page"><img src="./assets/sticker-bunny.png" alt=""><span>Reminders</span></button>
-      <button class="nav-button nav-add" id="nav-add" type="button"><img src="./assets/sticker-letter.png" alt=""><span>Add reminder</span></button>
-      <button class="nav-button" id="nav-shared" type="button"><img src="./assets/sticker-couple.png" alt=""><span>Together</span></button>
+      <button class="nav-button nav-selected" id="nav-home" type="button" aria-current="page"><img src="./assets/sticker-bunny.webp" alt=""><span>Reminders</span></button>
+      <button class="nav-button nav-add" id="nav-add" type="button"><img src="./assets/sticker-letter.webp" alt=""><span>Add reminder</span></button>
+      <button class="nav-button" id="nav-shared" type="button"><img src="./assets/sticker-couple.webp" alt=""><span>Together</span></button>
     </nav>
   </div>
 
@@ -50,7 +50,7 @@
         <h2 id="note-modal-heading">Add reminder</h2>
         <div class="editor-head-deco" aria-hidden="true"></div>
       </div>
-      <div class="editor-art-wrap"><img class="editor-art" src="./assets/art-envelope.png" alt="A magical pink letter, feather and glowing flowers"></div>
+      <div class="editor-art-wrap"><img class="editor-art" src="./assets/sticker-letter.webp" alt="A magical pink letter, feather and glowing flowers"></div>
       <div class="editor-fields">
         <label for="note-title">Title</label>
         <input id="note-title" name="title" maxlength="72" placeholder="What should we remember?" required autocomplete="off">
@@ -67,12 +67,12 @@
         </fieldset>
         <fieldset class="control-section sticker-section"><legend>Choose a sticker</legend>
           <div class="sticker-row" id="sticker-choice" role="group" aria-label="Illustration for note">
-            <button class="sticker-choice selected" data-value="book" type="button" aria-label="Open book" aria-pressed="true"><img src="./assets/sticker-book.png" alt=""></button>
-            <button class="sticker-choice" data-value="snack" type="button" aria-label="Snacks"><img src="./assets/sticker-snack.png" alt=""></button>
-            <button class="sticker-choice" data-value="vitamins" type="button" aria-label="Vitamins"><img src="./assets/sticker-vitamins.png" alt=""></button>
-            <button class="sticker-choice" data-value="letter" type="button" aria-label="Love letter"><img src="./assets/sticker-letter.png" alt=""></button>
-            <button class="sticker-choice" data-value="bunny" type="button" aria-label="Bunny"><img src="./assets/sticker-bunny.png" alt=""></button>
-            <button class="sticker-choice" data-value="bear" type="button" aria-label="Bear"><img src="./assets/sticker-bear.png" alt=""></button>
+            <button class="sticker-choice selected" data-value="book" type="button" aria-label="Open book" aria-pressed="true"><img src="./assets/sticker-book.webp" alt=""></button>
+            <button class="sticker-choice" data-value="snack" type="button" aria-label="Snacks"><img src="./assets/sticker-snack.webp" alt=""></button>
+            <button class="sticker-choice" data-value="vitamins" type="button" aria-label="Vitamins"><img src="./assets/sticker-vitamins.webp" alt=""></button>
+            <button class="sticker-choice" data-value="letter" type="button" aria-label="Love letter"><img src="./assets/sticker-letter.webp" alt=""></button>
+            <button class="sticker-choice" data-value="bunny" type="button" aria-label="Bunny"><img src="./assets/sticker-bunny.webp" alt=""></button>
+            <button class="sticker-choice" data-value="bear" type="button" aria-label="Bear"><img src="./assets/sticker-bear.webp" alt=""></button>
           </div>
         </fieldset>
       </div>
@@ -82,9 +82,9 @@
 
   <dialog id="settings-dialog" class="full-dialog" aria-labelledby="settings-heading">
     <div class="settings-panel">
-      <div class="editor-head"><button class="back-button" data-close="settings-dialog" type="button" aria-label="Back to notes"><span aria-hidden="true">‹</span></button><h2 id="settings-heading">Together</h2><img class="settings-header-art" src="./assets/sticker-couple.png" alt=""></div>
+      <div class="editor-head"><button class="back-button" data-close="settings-dialog" type="button" aria-label="Back to notes"><span aria-hidden="true">‹</span></button><h2 id="settings-heading">Together</h2><img class="settings-header-art" src="./assets/sticker-couple.webp" alt=""></div>
       <div class="settings-content">
-        <div class="settings-intro"><img src="./assets/sticker-couple.png" alt="Two cartoon friends hugging"><div><h3>Our reminders</h3><p>Connect both phones to receive the same reminders.</p></div></div>
+        <div class="settings-intro"><img src="./assets/sticker-couple.webp" alt="Two cartoon friends hugging"><div><h3>Our reminders</h3><p>Connect both phones to receive the same reminders.</p></div></div>
         <div id="offline-panel" class="settings-card"><h3>Connect to share notes</h3><p>Notes currently save on this device. Couple sharing and real push need a separate Supabase project, HTTPS hosting, and phone permissions. The full setup is in the included README.</p><span class="mode-pill">Local mode</span></div>
         <div id="cloud-panel" hidden>
           <div id="signed-out-panel" class="settings-card"><h3>Sign in to connect your phones</h3><form id="auth-form"><label for="auth-email">Email</label><input id="auth-email" type="email" required autocomplete="email" placeholder="Your email"><label for="auth-password">Password</label><input id="auth-password" type="password" minlength="6" required autocomplete="current-password" placeholder="Password"><div class="auth-buttons"><button id="sign-up" class="secondary-button" type="button">Create account</button><button class="primary-button" type="submit">Sign in</button></div></form><p class="settings-note">You may need to confirm your email before signing in.</p></div>
