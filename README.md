@@ -27,3 +27,9 @@ This app uses **the existing Wifey & Hubby Supabase project** `gtcybnvjdcmuzegxw
 Push requires installed Home Screen web app on compatible iOS, notification permission and an active network connection. Focus modes, app settings, network issues and device power policies can delay or suppress alerts. This is not a guarantee of exact-time delivery. The same Supabase **account** must be used on both phones for one shared list; signing into different accounts creates separate private lists. Real locked-phone delivery must be confirmed on actual devices after sign-in.
 
 No new paid Supabase project was created.
+
+## Same-day reminder edits (fix)
+
+The server keeps one delivery record per **note, subscribed device, local day, and reminder schedule** (repeat pattern + clock time + shared time zone). Editing a reminder from one time to a different time can generate a new delivery the same day, while repeated minute-by-minute cron checks do not resend it. The sender's polling retry window is 2 minutes. Both devices use the reminder's Pacific reference time together, not their individual device time zones.
+
+The deployed implementation is in `supabase/functions/send-petal-reminders/index.ts`. The live Supabase job `petal-notes-every-minute` invokes this function using existing secure Vault credentials.
