@@ -117,7 +117,17 @@ async function startCloud(){
   }
 }
 let noteChannel=null;
+let syncInFlight=null;
+let syncInFlightFor=null;
 async function syncAuth(user){
+  const forUser=user?.id||null;
+  if(syncInFlight && syncInFlightFor===forUser)return syncInFlight;
+  syncInFlightFor=forUser;
+  syncInFlight=performSync(user);
+  try{return await syncInFlight;}
+  finally{syncInFlight=null;}
+}
+async function performSync(user){
   if(!ui.client)return;
   if(noteChannel){await ui.client.removeChannel(noteChannel);noteChannel=null;}
   ui.user=user;ui.membership=user?{user_id:user.id}:null;
@@ -167,13 +177,6 @@ async function signIn(event){event.preventDefault();
   feedback('Signing in…');
   const {error}=await ui.client.auth.signInWithPassword({email,password});
   feedback(error?error.message:'Signed in.');
-}
-async function signUp(){
-  if(!ui.client)return;
-  const email=$('#auth-email').value.trim(),password=$('#auth-password').value;
-  if(!email||password.length<6){feedback('Enter your email and a password with at least 6 characters.');return;}
-  const {data,error}=await ui.client.auth.signUp({email,password,options:{emailRedirectTo:new URL('./index.html',location.href).href}});
-  feedback(error?error.message:(data.session?'Account created!':'Check your inbox to confirm your email, then sign in.'));
 }
 function base64ToBytes(value){
   const base64=value.replace(/-/g,'+').replace(/_/g,'/');const raw=atob(base64+'='.repeat((4-base64.length%4)%4));
@@ -230,7 +233,6 @@ function attachEvents(){
  $('#note-form').addEventListener('submit',saveNote);
  $('#delete-note').addEventListener('click',deleteNote);
  $('#auth-form').addEventListener('submit',signIn);
- $('#sign-up').addEventListener('click',signUp);
  $('#sign-out').addEventListener('click',async()=>{await ui.client?.auth.signOut();feedback('Signed out on this phone.');});
  $('#enable-push').addEventListener('click',enablePush);
  $('#test-push').addEventListener('click',testNotification);
