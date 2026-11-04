@@ -1,0 +1,94 @@
+name: Remove black from supplied Petal Notes icon
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-petal-icon-background.yml'
+permissions:
+  contents: write
+jobs:
+  correct-icons:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image tools
+        run: python -m pip install Pillow==11.3.0 numpy==2.2.6
+      - name: Remove only black outside the existing pink frame
+        run: |
+          python - <<'PY'
+          import numpy as np, hashlib, json
+          from collections import deque
+          from PIL import Image, ImageFilter
+          from pathlib import Path
+
+          source=Path('assets/icon-source.webp')
+          raw=source.read_bytes()
+          expected='17a0ea82565b8e572ce884920deebb1c057d0e82b8ed34cd089f9b1c63373593'
+          assert hashlib.sha256(raw).hexdigest()==expected,'The original source has changed; refusing to overwrite.'
+          img=Image.open(source).convert('RGB')
+          assert img.size==(384,384)
+          array=np.asarray(img,dtype=np.float32)
+          h,w=array.shape[:2]
+          allowed=(array[:,:,0]<238)
+          outside=np.zeros((h,w),dtype=np.uint8)
+          queue=deque()
+          for x in range(w):
+            if allowed[0,x]:outside[0,x]=1;queue.append((0,x))
+            if allowed[h-1,x]:outside[h-1,x]=1;queue.append((h-1,x))
+          for y in range(h):
+            if allowed[y,0]:outside[y,0]=1;queue.append((y,0))
+            if allowed[y,w-1]:outside[y,w-1]=1;queue.append((y,w-1))
+          while queue:
+            y,x=queue.popleft()
+            for ny,nx in ((y-1,x),(y+1,x),(y,x-1),(y,x+1)):
+              if 0<=ny<h and 0<=nx<w and outside[ny,nx]==0 and allowed[ny,nx]:
+                outside[ny,nx]=1
+                queue.append((ny,nx))
+          # Use a feather only at the boundary; the bunny/bell and the
+          # glossy inner rim remain the original source pixels.
+          feather=Image.fromarray(outside*255).filter(ImageFilter.GaussianBlur(radius=0.6))
+          matte=np.asarray(feather,dtype=np.float32)/255.0
+          yy,xx=np.mgrid[:h,:w].astype('float32')
+          xx=(xx-w/2)/(w/2);yy=(yy-h/2)/(h/2)
+          base=np.empty_like(array)
+          base[:,:,0]=244+5*(1-np.abs(xx))
+          base[:,:,1]=122+17*(1-np.abs(yy))
+          base[:,:,2]=196+13*(1-np.abs(xx*yy))
+          # Retain original halo light on the filled pink exterior.
+          glow=base+(255-base)*(array/255)*0.84
+          output=np.clip(array*(1-matte[:,:,None])+glow*matte[:,:,None],0,255).astype('uint8')
+          assert np.all(output[0,0]>90) and np.all(output[h-1,w-1]>90)
+          assert np.array_equal(output[h//2,w//2],array[h//2,w//2])
+          fixed=Image.fromarray(output,'RGB')
+          fixed.save('assets/icon-source.webp',format='WEBP',quality=92,method=6)
+          for size in (16,32,48,96,180,192,512):
+            fixed.resize((size,size),Image.Resampling.LANCZOS).save(
+              f'assets/icon-{size}.png',optimize=True)
+
+          # Android adaptive icon masks: pink backing, never dark corners.
+          bg=Image.new('RGB',(512,512),(244,125,201))
+          centered=fixed.resize((406,406),Image.Resampling.LANCZOS)
+          bg.paste(centered,(53,53))
+          bg.save('assets/icon-maskable-512.png',optimize=True)
+          fixed.resize((64,64),Image.Resampling.LANCZOS).save(
+            'favicon.ico',format='ICO',sizes=[(16,16),(32,32),(48,48),(64,64)])
+
+          htmlpath=Path('index.html');html=htmlpath.read_text()
+          assert '?v=bell-bunny-1' in html
+          htmlpath.write_text(html.replace('?v=bell-bunny-1','?v=bell-bunny-pink2'))
+          manifestpath=Path('manifest.webmanifest')
+          manifest=manifestpath.read_text()
+          assert 'bell-bunny-1' in manifest
+          manifestpath.write_text(manifest.replace('bell-bunny-1','bell-bunny-pink2'))
+          print('Black external background replaced, original illustration preserved')
+          PY
+      - name: Commit corrected website icons only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/icon-source.webp assets/icon-*.png favicon.ico index.html manifest.webmanifest
+          git diff --cached --quiet || git commit -m "Remove black outer background from original bunny-bell icon"
+          git push
