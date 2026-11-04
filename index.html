@@ -63,7 +63,7 @@
             <button class="time-choice" data-value="evening" type="button">Evening</button>
             <button class="time-choice" data-value="custom" type="button">My time</button>
           </div>
-          <div id="custom-time-wrap" class="custom-time-wrap" hidden><label for="custom-time">Daily reminder time</label><input id="custom-time" type="time" value="09:00" step="60"><p>No dates. This reminder repeats every day.</p></div>
+          <div id="custom-time-wrap" class="custom-time-wrap" hidden><label for="custom-time">Daily reminder time</label><input id="custom-time" type="time" value="09:00" step="60"><p>No dates. Both phones get this reminder together at the selected Pacific time.</p></div>
         </fieldset>
         <fieldset class="control-section sticker-section"><legend>Choose a sticker</legend>
           <div class="sticker-row" id="sticker-choice" role="group" aria-label="Illustration for note">
@@ -111,7 +111,7 @@
           </div>
           <div id="push-panel" class="settings-card" hidden>
             <h3>Background push notifications</h3>
-            <p>Enable on each phone separately. Notifications can arrive with the app closed and appear on the Lock Screen, subject to iOS notification settings.</p>
+            <p>Enable on each phone separately. Both phones receive shared reminders simultaneously, even across time zones, including when the app is closed (subject to iOS notification settings).</p>
             <button id="enable-push" class="primary-button full" type="button">Enable notifications</button>
             <p id="push-status" class="settings-note">On iPhone: open in Safari, choose Share → Add to Home Screen, then launch Petal Notes from its icon before enabling notifications.</p>
             <button id="test-push" class="small-link" type="button">Test notification on this phone</button>

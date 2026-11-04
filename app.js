@@ -72,7 +72,7 @@ async function saveNote(event){
  event.preventDefault();if(ui.working)return;
  const title=$('#note-title').value.trim();const body=$('#note-body').value.trim();if(!title){toast('Please add a title.');return;}
  const existing=ui.notes.find(n=>n.id===ui.editingId);
- const next={title:title.slice(0,72),body:body.slice(0,500),repeat:ui.repeat,remind_time:ui.repeat==='custom'?$('#custom-time').value:null,sticker:ui.sticker};
+ const next={title:title.slice(0,72),body:body.slice(0,500),repeat:ui.repeat,remind_time:ui.repeat==='custom'?$('#custom-time').value:null,sticker:ui.sticker,reminder_timezone:existing?.reminder_timezone||'America/Los_Angeles'};
  if(next.repeat==='custom'&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(next.remind_time||'')){toast('Choose a valid daily time.');return;}
  ui.working=true;$('#save-note').disabled=true;
  try{
@@ -147,7 +147,7 @@ async function fetchNotes(){
   if(!usingShared())return;
   const userId=ui.user.id;
   const {data,error}=await ui.client.from('petal_notes')
-    .select('id,title,body,repeat,remind_time,sticker,created_at')
+    .select('id,title,body,repeat,remind_time,reminder_timezone,sticker,created_at')
     .eq('user_id',userId).order('created_at',{ascending:false});
   if(error){feedback('Could not sync reminders: '+error.message);return;}
   if(ui.user?.id!==userId)return;
@@ -164,7 +164,8 @@ async function importLocalNotes(){
     body:safeText(note.body).slice(0,500),
     repeat:note.repeat||'off',
     remind_time:note.remind_time||null,
-    sticker:ART[note.sticker]?note.sticker:'book'
+    sticker:ART[note.sticker]?note.sticker:'book',
+    reminder_timezone:note.reminder_timezone||'America/Los_Angeles'
   }));
   const {error}=await ui.client.from('petal_notes').insert(rows);
   if(error){feedback('Could not import saved reminders: '+error.message);return;}
