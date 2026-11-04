@@ -84,12 +84,38 @@
     <div class="settings-panel">
       <div class="editor-head"><button class="back-button" data-close="settings-dialog" type="button" aria-label="Back to notes"><span aria-hidden="true">‹</span></button><h2 id="settings-heading">Together</h2><img class="settings-header-art" src="./assets/sticker-couple.webp" alt=""></div>
       <div class="settings-content">
-        <div class="settings-intro"><img src="./assets/sticker-couple.webp" alt="Two cartoon friends hugging"><div><h3>Our reminders</h3><p>Connect both phones to receive the same reminders.</p></div></div>
-        <div id="offline-panel" class="settings-card"><h3>Connect to share notes</h3><p>Notes currently save on this device. Couple sharing and real push need a separate Supabase project, HTTPS hosting, and phone permissions. The full setup is in the included README.</p><span class="mode-pill">Local mode</span></div>
-        <div id="cloud-panel" hidden>
-          <div id="signed-out-panel" class="settings-card"><h3>Sign in to connect your phones</h3><form id="auth-form"><label for="auth-email">Email</label><input id="auth-email" type="email" required autocomplete="email" placeholder="Your email"><label for="auth-password">Password</label><input id="auth-password" type="password" minlength="6" required autocomplete="current-password" placeholder="Password"><div class="auth-buttons"><button id="sign-up" class="secondary-button" type="button">Create account</button><button class="primary-button" type="submit">Sign in</button></div></form><p class="settings-note">You may need to confirm your email before signing in.</p></div>
-          <div id="signed-in-panel" hidden><div class="settings-card"><div class="signed-in-row"><strong id="signed-in-email"></strong><button id="sign-out" class="small-link" type="button">Sign out</button></div><div id="room-empty"><h3>Make a space for two</h3><p>Create one private space, then share its invite code with your partner.</p><div class="auth-buttons"><button id="create-space" class="secondary-button" type="button">Create shared space</button></div><div class="or-divider">or join your partner</div><label for="join-code">Invite code</label><input id="join-code" autocomplete="off" spellcheck="false" placeholder="Paste invite code"><button id="join-room" class="primary-button full" type="button">Join space</button></div><div id="room-ready" hidden><h3>Your shared reminders</h3><p>Share this private code with your partner.</p><div class="invite-code"><code id="invite-code"></code><button id="copy-code" type="button">Copy</button></div><p class="settings-note" id="your-role"></p></div></div></div>
-          <div id="push-panel" class="settings-card" hidden><h3>Push notifications</h3><p>Turn these on separately on each phone. Daily reminders arrive at your chosen local times.</p><button id="enable-push" class="primary-button full" type="button">Enable notifications</button><p id="push-status" class="settings-note">On iPhone, first install this app to your Home Screen from Safari.</p><button id="test-push" class="small-link" type="button">Test notification on this phone</button></div>
+        <div class="settings-intro"><img src="./assets/sticker-couple.webp" alt="Two cartoon friends hugging"><div><h3>Our reminders</h3><p>Sign in with the same account on both phones.</p></div></div>
+        <div id="offline-panel" class="settings-card" hidden><h3>Offline mode</h3><p>Sign in to synchronize reminders and activate push notifications.</p></div>
+        <div id="cloud-panel">
+          <div id="signed-out-panel" class="settings-card">
+            <h3>Sign in to shared reminders</h3>
+            <p>Use the same Supabase account you already use for Wifey & Hubby. Sign in on both phones to share one reminders list.</p>
+            <form id="auth-form">
+              <label for="auth-email">Email</label>
+              <input id="auth-email" type="email" required autocomplete="email" placeholder="Your email">
+              <label for="auth-password">Password</label>
+              <input id="auth-password" type="password" minlength="6" required autocomplete="current-password" placeholder="Password">
+              <div class="auth-buttons">
+                <button id="sign-up" class="secondary-button" type="button">Create account</button>
+                <button class="primary-button" type="submit">Sign in</button>
+              </div>
+            </form>
+            <p class="settings-note">Already use Wifey & Hubby? Sign in with that same account. No new login needed.</p>
+          </div>
+          <div id="signed-in-panel" hidden>
+            <div class="settings-card">
+              <div class="signed-in-row"><strong id="signed-in-email"></strong><button id="sign-out" class="small-link" type="button">Sign out</button></div>
+              <h3>Shared reminders connected</h3>
+              <p>Sign in using this same account on the other phone. Your reminders will automatically appear on both.</p>
+            </div>
+          </div>
+          <div id="push-panel" class="settings-card" hidden>
+            <h3>Background push notifications</h3>
+            <p>Enable on each phone separately. Notifications can arrive with the app closed and appear on the Lock Screen, subject to iOS notification settings.</p>
+            <button id="enable-push" class="primary-button full" type="button">Enable notifications</button>
+            <p id="push-status" class="settings-note">On iPhone: open in Safari, choose Share → Add to Home Screen, then launch Petal Notes from its icon before enabling notifications.</p>
+            <button id="test-push" class="small-link" type="button">Test notification on this phone</button>
+          </div>
         </div>
         <div id="settings-message" class="settings-feedback" role="status" aria-live="polite"></div>
       </div>
