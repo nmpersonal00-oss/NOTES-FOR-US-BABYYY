@@ -7,7 +7,7 @@ self.addEventListener('push', (event) => {
   const title = String(message.title || 'Petal Notes').slice(0, 100);
   const body = String(message.body || 'You have a reminder.').slice(0, 500);
   event.waitUntil(self.registration.showNotification(title, {
-    body, icon:'./assets/icon-192.png',badge:'./assets/icon-192.png',
+    body, icon:'./assets/icon-192.png?v=ornate-pink-bell-20261103',badge:'./assets/icon-192.png?v=ornate-pink-bell-20261103',
     tag:String(message.tag || 'petal-note'),renotify:false,
     data:{url:new URL('./index.html',self.registration.scope).href}
   }));
